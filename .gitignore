@@ -1,0 +1,3 @@
+# ignore all in folder .venv; and folder itself 
+.venv/*
+.venv
