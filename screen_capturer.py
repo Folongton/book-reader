@@ -48,6 +48,6 @@ def save_screenshot(image, folder: str, index: int) -> str:
     """
     if not os.path.exists(folder):
         os.makedirs(folder)
-    file_path = os.path.join(folder, f"screenshot_{index}.png")
+    file_path = os.path.join(folder, f"{index:05d}.png")
     image.save(file_path)
     return file_path

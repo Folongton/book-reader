@@ -1,3 +1,10 @@
 # ignore all in folder .venv; and folder itself 
 .venv/*
 .venv
+
+# all sreen files
+*.png
+
+# all folders with "screen" in name and all files in them
+*screen*
+*screen*/*

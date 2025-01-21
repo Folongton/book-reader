@@ -1,6 +1,9 @@
 import pytesseract
 from PIL import Image
 
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+
 def contains_text(image, target_text: str, case_sensitive: bool = False) -> bool:
     """
     Performs OCR on the given PIL image and checks if target_text is in the recognized text.

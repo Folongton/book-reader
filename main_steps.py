@@ -26,23 +26,27 @@ def capture_pages_until_end(target_text: str, region: tuple, screenshots_folder:
         # 2. Check if the target text is present
         if contains_text(current_full_screen, target_text, case_sensitive=False):
             
-            # 3. Capture the specified region and save it
-            region_img = capture_region(region)
-            save_screenshot(region_img, screenshots_folder, region_screenshot_counter)
-            region_screenshot_counter += 1
+            while True:
+                # 3. Capture the specified region and save it
+                region_img = capture_region(region)
+                save_screenshot(region_img, screenshots_folder, region_screenshot_counter)
+                region_screenshot_counter += 1
 
-            # 4. Press left key again
-            press_key('left')
-            wait(0.5)
+                # 4. Press left key again
+                press_key('right')
+                wait(0.5)
 
-            # 5. Compare with previous to see if we reached the end
-            if previous_region_img and images_are_equal(previous_region_img, region_img):
-                # End of pages (two consecutive identical screenshots)
-                print("Reached the end of the book.")
-                break
+                # 5. Compare with previous to see if we reached the end
+                if previous_region_img and images_are_equal(previous_region_img, region_img):
+                    # End of pages (two consecutive identical screenshots)
+                    print("Reached the end of the book.")
+                    break
 
+                previous_region_img = region_img
+            break
+            
         else:
-            print(f"Target text not found. Continuing looking for '{target_text}' text ...")
+            print(f"Target text not found. Continuing looking for target_text to start snipping...")
 
         # 3-second wait before the next iteration
         wait(3)
@@ -57,6 +61,7 @@ def gather_ocr_text(screenshots_folder: str) -> str:
             path = os.path.join(screenshots_folder, file)
             text = extract_text(path)
             extracted_texts.append(text)
+            print(f"Extracted text from {file}")
     return "\n".join(extracted_texts)
 
 def save_text_to_file(text: str, filepath: str):
