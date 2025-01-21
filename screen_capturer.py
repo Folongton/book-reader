@@ -29,9 +29,9 @@ def images_are_equal(img1, img2) -> bool:
     diff = ImageChops.difference(img1, img2)
     return not diff.getbbox()
 
-def press_key(key: str) -> None:
+def turn_page(key: str) -> None:
     """
-    Presses a key (e.g., 'left', 'right', etc.).
+    Presses a key to turn page (e.g., 'left', 'right', etc.).
     """
     pyautogui.press(key)
 

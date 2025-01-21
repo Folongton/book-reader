@@ -8,3 +8,7 @@
 # all folders with "screen" in name and all files in them
 *screen*
 *screen*/*
+
+# __pycache__ folder
+__pycache__/*
+__pycache__

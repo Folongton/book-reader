@@ -3,53 +3,37 @@ from screen_capturer import (
     capture_full_screen,
     capture_region,
     images_are_equal,
-    press_key,
+    turn_page,
     wait,
     save_screenshot
 )
 from ocr_utils import contains_text, extract_text
 
-def capture_pages_until_end(target_text: str, region: tuple, screenshots_folder: str):
+def capture_pages_until_end(target_text: str, region: tuple, screenshots_folder: str, key: str = 'right'):
     """
     Continuously capture the screen until two consecutive screenshots
     are identical, indicating no more pages can be turned.
-    Whenever `target_text` is found on the screen, capture the specified region
-    and save the screenshot, then press 'left' again.
     """
     previous_region_img = None
     region_screenshot_counter = 1
-
+            
     while True:
-        # 1. Capture full screen
-        current_full_screen = capture_full_screen()
+        # Capture the specified region and save it
+        region_img = capture_region(region)
+        save_screenshot(region_img, screenshots_folder, region_screenshot_counter)
+        region_screenshot_counter += 1
 
-        # 2. Check if the target text is present
-        if contains_text(current_full_screen, target_text, case_sensitive=False):
-            
-            while True:
-                # 3. Capture the specified region and save it
-                region_img = capture_region(region)
-                save_screenshot(region_img, screenshots_folder, region_screenshot_counter)
-                region_screenshot_counter += 1
+        # Turn page key
+        turn_page(key)
+        wait(0.5)
 
-                # 4. Press left key again
-                press_key('right')
-                wait(0.5)
-
-                # 5. Compare with previous to see if we reached the end
-                if previous_region_img and images_are_equal(previous_region_img, region_img):
-                    # End of pages (two consecutive identical screenshots)
-                    print("Reached the end of the book.")
-                    break
-
-                previous_region_img = region_img
+        # 5. Compare with previous to see if we reached the end
+        if previous_region_img and images_are_equal(previous_region_img, region_img):
+            # End of pages (two consecutive identical screenshots)
+            print("Reached the end of the book.")
             break
-            
-        else:
-            print(f"Target text not found. Continuing looking for target_text to start snipping...")
 
-        # 3-second wait before the next iteration
-        wait(3)
+        previous_region_img = region_img
 
 def gather_ocr_text(screenshots_folder: str) -> str:
     """
