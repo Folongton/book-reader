@@ -8,6 +8,7 @@ from screen_capturer import (
     save_screenshot
 )
 from ocr_utils import contains_text, extract_text
+from chatgpt_utils import format_text_with_chatgpt
 
 def capture_pages_until_end(target_text: str, region: tuple, screenshots_folder: str, key: str = 'right'):
     """
