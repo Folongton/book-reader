@@ -1,5 +1,3 @@
-Here's a description for your `README.md`:
-
 ---
 
 # Screen Capture and Text Recognition App
