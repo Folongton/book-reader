@@ -6,11 +6,11 @@ from main_steps import (capture_pages_until_end,
                         format_and_save_text_with_chatgpt
 )
 
-TARGET_TEXT = "Adobe Digital Editions"
-SCREENSHOTS_FOLDER = "screens - Superforecasting"
-PRESS_KEY =  {'kindle': 'right', 'Adobe Digital': 'pagedown'}
+SCREENSHOTS_FOLDER = "screens - Law 101"
+READER = "kindle"
 OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
 
+press_key =  {'kindle': 'right', 'Adobe Digital': 'pagedown'}
 outbut_text_file = SCREENSHOTS_FOLDER.replace(" ", "_").replace("screens-", "") + "_text.txt"
 formatted_file = outbut_text_file + "_formatted.txt"
 
@@ -18,7 +18,7 @@ formatted_file = outbut_text_file + "_formatted.txt"
 if __name__ == "__main__":
 
     # Capture pages from Kindle or Adobe Digital Editions
-    capture_pages_until_end(TARGET_TEXT, get_region(), SCREENSHOTS_FOLDER, PRESS_KEY["Adobe Digital"])
+    capture_pages_until_end(get_region(), SCREENSHOTS_FOLDER, press_key[READER])
 
     # Perform OCR and save text to file
     combined_text = gather_ocr_text(SCREENSHOTS_FOLDER)
